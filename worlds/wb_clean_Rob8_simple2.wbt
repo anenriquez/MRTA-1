@@ -1,0 +1,6866 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "The MyBot robot, the robot used in the tutorial of Webots, with Physics in the simulation"
+    "Author: Simon Blanchoud"
+    "Date: 16 AUG 2006"
+  ]
+  title "MyBot with Physics"
+}
+Viewpoint {
+  orientation -0.373861 -0.855681 -0.357824 1.75109
+  position -2042.5 2179.11 -76.4115
+  near 0.11
+}
+Background {
+  skyColor [
+    0.4 0.7 1
+  ]
+}
+DirectionalLight {
+  ambientIntensity 2
+  direction 0.4 -0.8 -0.2
+  intensity 0.8
+}
+DEF SKYDOME Shape {
+  appearance Appearance {
+    material Material {
+      ambientIntensity 1
+      diffuseColor 1 1 1
+    }
+    texture ImageTexture {
+      url [
+        "market/skydome.png"
+      ]
+    }
+    textureTransform TextureTransform {
+      scale 1 -1
+      translation 0.5 0
+    }
+  }
+  geometry Sphere {
+    radius -5000
+  }
+}
+DEF GRD Solid {
+  translation 0 -0.1 10
+  children [
+    DEF FLR Shape {
+      appearance Appearance {
+        material Material {
+          ambientIntensity 0
+          diffuseColor 1 1 1
+        }
+        textureTransform TextureTransform {
+        }
+      }
+      geometry Box {
+        size 23.4 0.2 32
+      }
+    }
+    Solid {
+      translation 0 -5000 -4
+      boundingObject DEF g_bot Shape {
+        geometry Box {
+          size 15 0.001 13
+        }
+      }
+    }
+  ]
+  boundingObject Group {
+    children [
+      Shape {
+        geometry Box {
+          size 23.4 0.2 32
+        }
+      }
+      DEF up Transform {
+        translation 11.7 0.25 0
+        children [
+          Box {
+            size 0.01 0.5 32
+          }
+        ]
+      }
+      DEF down Transform {
+        translation -11.7 0.25 0
+        children [
+          Box {
+            size 0.01 0.5 32
+          }
+        ]
+      }
+      DEF left Transform {
+        translation 0 0.25 -16
+        rotation 0 1 0 1.5708
+        children [
+          DEF up Box {
+            size 0.01 0.5 23.5
+          }
+        ]
+      }
+      DEF right Transform {
+        translation 0 0.25 16
+        rotation 0 1 0 1.5708
+        children [
+          DEF up Box {
+            size 0.01 0.5 23.5
+          }
+        ]
+      }
+    ]
+  }
+}
+Supervisor {
+  children [
+    Emitter {
+      channel -1
+    }
+    Receiver {
+      channel -1
+    }
+  ]
+  controller "supervisor"
+}
+DEF R1 DifferentialWheels {
+  translation 0.7 -0.00530018 -3.3
+  rotation -2.17689e-005 0.999961 0.00881817 3.14618
+  children [
+    Servo {
+      translation 0 0.129937 -0.01
+      rotation 1 0 0 -1.5708
+      children [
+        Servo {
+          translation 0.120144 0.077 -0.053
+          rotation 0 1 0 1.5708
+          children [
+            Solid {
+              translation 0 0.087 0.009
+              children [
+                DEF nh Shape {
+                  geometry Box {
+                    size 0.11 0.17 0.01
+                  }
+                }
+              ]
+            }
+          ]
+          name "hold_servo"
+          boundingObject Group {
+            children [
+              Transform {
+                translation 0 0.087 0.009
+                children [
+                  Box {
+                    size 0.11 0.17 0.01
+                  }
+                ]
+              }
+            ]
+          }
+          physics Physics {
+            density -1
+            mass 0.1
+            coulombFriction 1e+006
+          }
+          type "linear"
+          maxForce 1000
+          acceleration 100
+          position 5.21029e-010
+        }
+        Servo {
+          translation -0.12013 0.077 -0.053
+          rotation 0 1 0 -1.5708
+          children [
+            Solid {
+              translation 0 0.087 0.009
+              children [
+                DEF nh Shape {
+                  geometry Box {
+                    size 0.11 0.17 0.01
+                  }
+                }
+              ]
+            }
+          ]
+          name "hold_servo2"
+          boundingObject Group {
+            children [
+              Transform {
+                translation 0 0.087 0.009
+                children [
+                  DEF nh Shape {
+                    geometry Box {
+                      size 0.11 0.17 0.01
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+          physics Physics {
+            density -1
+            mass 0.1
+            coulombFriction 1e+006
+          }
+          type "linear"
+          maxForce 1000
+          acceleration 100
+          position 5.1316e-010
+        }
+      ]
+      name "up_servo"
+      physics Physics {
+        density 1
+        mass 1
+        coulombFriction 1000
+      }
+      type "linear"
+      maxForce 100
+      position -1.55348e-005
+    }
+    Solid {
+      translation -0.1453 0.0825 0
+      rotation 1 0 0 5.68302
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "left wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+    }
+    Solid {
+      translation 0.1453 0.0825 0
+      rotation 1 0 0 0.337766
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.0037037 0.0037037 0.0037037
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "right wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+    }
+    DistanceSensor {
+      translation -0.027 0.23 -0.164
+      rotation 0 1 0 1.8
+      name "ds3"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.077 0.23 -0.147
+      rotation 0 1 0 2.2
+      name "ds2"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.118 0.23 -0.116
+      rotation 0 1 0 2.6
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.4 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.136 0.23 -0.071
+      rotation 0 1 0 3
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.1 1024 0.1
+        0.2 0 0.1
+      ]
+      type "sonar"
+      aperture 1
+    }
+    DistanceSensor {
+      translation 0.136 0.23 -0.071
+      rotation 0 1 0 0.14
+      name "ds7"
+      lookupTable [
+        0 1024 0
+        0.1 1024 0.1
+        0.2 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.118 0.23 -0.116
+      rotation 0 1 0 0.54
+      name "ds6"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.4 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.077 0.23 -0.147
+      rotation 0 1 0 0.94
+      name "ds5"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.027 0.23 -0.164
+      rotation 0 1 0 1.34
+      name "ds4"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+    }
+    DEF REAR_WHEEL Solid {
+      translation 0 0.035 0.12
+      rotation 1 -1.84998e-005 -6.95273e-005 1.63418
+      children [
+        DEF REAL_TR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry DEF REAL_WHEEL Cylinder {
+                height 0.01
+                radius 0.03
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAL_TR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                ambientIntensity 0.4
+                diffuseColor 0 0 0
+              }
+            }
+            geometry DEF REAL_WHEEL Cylinder {
+              height 0.01
+              radius 0.03
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+    }
+    DEF FRONT GPS {
+      translation 0 0 -0.1
+      name "front_gps"
+    }
+    DEF CENTER GPS {
+      name "center_gps"
+    }
+    Emitter {
+      channel -1
+    }
+    Receiver {
+      channel -1
+    }
+    DEF dist_sensor Servo {
+      translation 0 0.03 0
+      rotation 0 1 0 -1.5708
+      children [
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 0.4
+          name "ob0"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.3
+          name "ob1"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.85
+          name "ob2"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.2
+          name "ob3"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.5
+          name "ob4"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.6 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.8
+          name "ob5"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.6 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.1
+          name "ob6"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.55
+          name "ob7"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3
+          name "ob8"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3.6
+          name "ob9"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+      ]
+      name "lift_servo"
+      maxForce 1000
+      acceleration 50
+      position -1.5708
+    }
+  ]
+  name "1"
+  description "designed by Activmedia Robotics"
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.16 0.05
+        children [
+          Box {
+            size 0.33 0.25 0.33
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 10
+  }
+  controller "gripper"
+  axleLength 0.32
+  wheelRadius 0.0825
+  maxAcceleration -1
+  speedUnit 0.1
+  maxForce 2
+}
+DEF R2 DifferentialWheels {
+  translation 8.7 -0.00530018 10.4
+  rotation 0 1 0 1.57538
+  children [
+    Servo {
+      translation 0 0.129921 -0.01
+      rotation 1 0 0 -1.5708
+      children [
+        Servo {
+          translation 0.120144 0.077 -0.053
+          rotation 0 1 0 1.5708
+          children [
+            Solid {
+              translation 0 0.087 0.009
+              children [
+                DEF nh Shape {
+                  geometry Box {
+                    size 0.11 0.17 0.01
+                  }
+                }
+              ]
+            }
+          ]
+          name "hold_servo"
+          boundingObject Group {
+            children [
+              Transform {
+                translation 0 0.087 0.009
+                children [
+                  Box {
+                    size 0.11 0.17 0.01
+                  }
+                ]
+              }
+            ]
+          }
+          physics Physics {
+            density -1
+            mass 0.1
+            coulombFriction 1e+006
+          }
+          type "linear"
+          maxForce 1000
+          acceleration 100
+          position 5.21029e-010
+        }
+        Servo {
+          translation -0.12013 0.077 -0.053
+          rotation 0 1 0 -1.5708
+          children [
+            Solid {
+              translation 0 0.087 0.009
+              children [
+                DEF nh Shape {
+                  geometry Box {
+                    size 0.11 0.17 0.01
+                  }
+                }
+              ]
+            }
+          ]
+          name "hold_servo2"
+          boundingObject Group {
+            children [
+              Transform {
+                translation 0 0.087 0.009
+                children [
+                  DEF nh Shape {
+                    geometry Box {
+                      size 0.11 0.17 0.01
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+          physics Physics {
+            density -1
+            mass 0.1
+            coulombFriction 1e+006
+          }
+          type "linear"
+          maxForce 1000
+          acceleration 100
+          position 5.1316e-010
+        }
+      ]
+      name "up_servo"
+      physics Physics {
+        density 1
+        mass 1
+        coulombFriction 1000
+      }
+      type "linear"
+      maxForce 100
+      position -1.55348e-005
+    }
+    Solid {
+      translation -0.1453 0.0825 0
+      rotation 1 0 0 5.68302
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "left wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+    }
+    Solid {
+      translation 0.1453 0.0825 0
+      rotation 1 0 0 0.337766
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.0037037 0.0037037 0.0037037
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "right wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+    }
+    DistanceSensor {
+      translation -0.027 0.23 -0.164
+      rotation 0 1 0 1.8
+      name "ds3"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.077 0.23 -0.147
+      rotation 0 1 0 2.2
+      name "ds2"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.118 0.23 -0.116
+      rotation 0 1 0 2.6
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.4 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.136 0.23 -0.071
+      rotation 0 1 0 3
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.1 1024 0.1
+        0.2 0 0.1
+      ]
+      type "sonar"
+      aperture 1
+    }
+    DistanceSensor {
+      translation 0.136 0.23 -0.071
+      rotation 0 1 0 0.14
+      name "ds7"
+      lookupTable [
+        0 1024 0
+        0.1 1024 0.1
+        0.2 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.118 0.23 -0.116
+      rotation 0 1 0 0.54
+      name "ds6"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.4 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.077 0.23 -0.147
+      rotation 0 1 0 0.94
+      name "ds5"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.027 0.23 -0.164
+      rotation 0 1 0 1.34
+      name "ds4"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+    }
+    DEF REAR_WHEEL Solid {
+      translation 0 0.035 0.12
+      rotation 1 -1.84998e-005 -6.95273e-005 1.63418
+      children [
+        DEF REAL_TR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry DEF REAL_WHEEL Cylinder {
+                height 0.01
+                radius 0.03
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAL_TR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                ambientIntensity 0.4
+                diffuseColor 0 0 0
+              }
+            }
+            geometry DEF REAL_WHEEL Cylinder {
+              height 0.01
+              radius 0.03
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+    }
+    DEF FRONT GPS {
+      translation 0 0 -0.1
+      name "front_gps"
+    }
+    DEF CENTER GPS {
+      name "center_gps"
+    }
+    Emitter {
+      channel -1
+    }
+    Receiver {
+      channel -1
+    }
+    DEF dist_sensor Servo {
+      translation 0 0.03 0
+      rotation 0 1 0 -1.5708
+      children [
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 0.4
+          name "ob0"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.3
+          name "ob1"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.85
+          name "ob2"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.2
+          name "ob3"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.5
+          name "ob4"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.6 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.8
+          name "ob5"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.6 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.1
+          name "ob6"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.55
+          name "ob7"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3
+          name "ob8"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3.6
+          name "ob9"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+      ]
+      name "lift_servo"
+      maxForce 1000
+      acceleration 50
+      position -1.5708
+    }
+  ]
+  name "2"
+  description "designed by Activmedia Robotics"
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.16 0.05
+        children [
+          Box {
+            size 0.33 0.25 0.33
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 10
+  }
+  controller "gripper"
+  axleLength 0.32
+  wheelRadius 0.0825
+  maxAcceleration -1
+  speedUnit 0.1
+  maxForce 2
+}
+DEF R3 DifferentialWheels {
+  translation 9.4 -0.00480992 9
+  rotation 0 1 0 1.57
+  children [
+    Servo {
+      translation -0.16 0.07 -0.1
+      children [
+        Solid {
+          translation 0 0 -0.1
+          rotation 1 0 0 1.5708
+          children [
+            DEF rnd Shape {
+              appearance Appearance {
+                material Material {
+                }
+              }
+              geometry Cylinder {
+                height 0.2
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      name "tong_servo"
+      boundingObject Transform {
+        translation 0 0 -0.1
+        rotation 1 0 0 1.5708
+        children [
+          USE rnd
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.01
+        coulombFriction 0
+      }
+      maxForce 1000
+      position -1.5708
+    }
+    Servo {
+      translation 0.16 0.05 -0.1
+      children [
+        Solid {
+          translation 0 0 -0.1
+          rotation 1 0 0 1.5708
+          children [
+            USE rnd
+          ]
+        }
+      ]
+      name "tong_servo2"
+      boundingObject Transform {
+        translation 0 0 -0.1
+        rotation 1 0 0 1.5708
+        children [
+          USE rnd
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.01
+        coulombFriction 0
+      }
+      maxForce 1000
+      position 1.5708
+    }
+    Solid {
+      translation 0 0.21 -0.025
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0 1
+            }
+          }
+          geometry Box {
+            size 0.34 0.05 0.15
+          }
+        }
+      ]
+    }
+    Solid {
+      translation 0 0.015 0.09
+      children [
+        DEF pan Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0 1
+            }
+          }
+          geometry Box {
+            size 0.34 1e-007 0.32
+          }
+        }
+      ]
+    }
+    DEF push Servo {
+      translation -5.49456e-010 0.1 0.235058
+      rotation 0 1 0 3.14159
+      children [
+        Solid {
+          children [
+            DEF push Shape {
+              geometry Box {
+                size 0.3 0.14 0.03
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.15 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.15 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+      ]
+      name "push_servo"
+      boundingObject Group {
+        children [
+          USE push
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.0001
+      }
+      type "linear"
+      maxForce 1000
+      position -2.32407e-005
+    }
+    Servo {
+      rotation 0 1 0 2.70782e-010
+      children [
+        Solid {
+          translation 0.16 0.11 0.075
+          children [
+            DEF side2 Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.501961 0 1
+                }
+              }
+              geometry Box {
+                size 0.02 0.19 0.35
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.16 0.11 0.075
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.501961 0 1
+                }
+              }
+              geometry Box {
+                size 0.02 0.19 0.35
+              }
+            }
+          ]
+        }
+      ]
+      name "carr_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0.16 0.11 0.075
+            children [
+              USE side2
+            ]
+          }
+          Transform {
+            translation -0.16 0.11 0.075
+            children [
+              USE side2
+            ]
+          }
+        ]
+      }
+      maxForce 10000
+      position 6.76956e-011
+    }
+    DEF rear_wheel Solid {
+      translation 0.17 0.02 0.23
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    DEF rear_wheel Solid {
+      translation -0.17 0.02 0.23
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    Solid {
+      translation -0.2 0.0825 0
+      rotation 1 0 0 5.68302
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "left wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    Solid {
+      translation 0.2 0.0825 0
+      rotation 1 0 0 0.337766
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.0037037 0.0037037 0.0037037
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "right wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    DistanceSensor {
+      translation -0.027 0.23 -0.164
+      rotation 0 1 0 1.8
+      name "ds3"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.077 0.23 -0.147
+      rotation 0 1 0 2.2
+      name "ds2"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.118 0.23 -0.116
+      rotation 0 1 0 2.6
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.4 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.136 0.23 -0.071
+      rotation 0 1 0 3
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.2 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.136 0.23 -0.071
+      rotation 0 1 0 0.14
+      name "ds7"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.2 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.118 0.23 -0.116
+      rotation 0 1 0 0.54
+      name "ds6"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.4 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.077 0.23 -0.147
+      rotation 0 1 0 0.94
+      name "ds5"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.027 0.23 -0.164
+      rotation 0 1 0 1.34
+      name "ds4"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+    }
+    DEF FRONT GPS {
+      translation 0 0 -0.1
+      name "front_gps"
+    }
+    DEF CENTER GPS {
+      name "center_gps"
+    }
+    Emitter {
+      channel -1
+    }
+    Receiver {
+      channel -1
+    }
+    DEF dist_sensor Servo {
+      translation 0 0.03 -0.07
+      rotation 0 1 0 -1.5708
+      children [
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 0.4
+          name "ob0"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.3
+          name "ob1"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.85
+          name "ob2"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.2
+          name "ob3"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.5
+          name "ob4"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.6 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.8
+          name "ob5"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.6 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.1
+          name "ob6"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.55
+          name "ob7"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3
+          name "ob8"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3.6
+          name "ob9"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+      ]
+      name "lift_servo"
+      maxForce 1000
+      acceleration 50
+      position -1.5708
+    }
+  ]
+  name "3"
+  description "designed by Activmedia Robotics"
+  boundingObject Group {
+    children [
+      Transform {
+        translation -0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.015 0.06
+        children [
+          USE pan
+        ]
+      }
+      Transform {
+        translation 0 0.24 -0.03
+        children [
+          Box {
+            size 0.42 0.07 0.2
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 10
+  }
+  controller "caripper"
+  axleLength 0.32
+  wheelRadius 0.0825
+  maxAcceleration -1
+  speedUnit 0.1
+  maxForce 2
+}
+DEF R4 DifferentialWheels {
+  translation -2.1 -0.00480992 -2.9
+  rotation 0 1 0 3.14159
+  children [
+    Servo {
+      translation -0.16 0.07 -0.1
+      children [
+        Solid {
+          translation 0 0 -0.1
+          rotation 1 0 0 1.5708
+          children [
+            DEF rnd Shape {
+              appearance Appearance {
+                material Material {
+                }
+              }
+              geometry Cylinder {
+                height 0.2
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      name "tong_servo"
+      boundingObject Transform {
+        translation 0 0 -0.1
+        rotation 1 0 0 1.5708
+        children [
+          USE rnd
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.01
+        coulombFriction 0
+      }
+      maxForce 1000
+      position -1.5708
+    }
+    Servo {
+      translation 0.16 0.05 -0.1
+      children [
+        Solid {
+          translation 0 0 -0.1
+          rotation 1 0 0 1.5708
+          children [
+            USE rnd
+          ]
+        }
+      ]
+      name "tong_servo2"
+      boundingObject Transform {
+        translation 0 0 -0.1
+        rotation 1 0 0 1.5708
+        children [
+          USE rnd
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.01
+        coulombFriction 0
+      }
+      maxForce 1000
+      position 1.5708
+    }
+    Solid {
+      translation 0 0.21 -0.025
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0 1
+            }
+          }
+          geometry Box {
+            size 0.34 0.05 0.15
+          }
+        }
+      ]
+    }
+    Solid {
+      translation 0 0.015 0.09
+      children [
+        DEF pan Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0 1
+            }
+          }
+          geometry Box {
+            size 0.34 1e-007 0.32
+          }
+        }
+      ]
+    }
+    DEF push Servo {
+      translation -6.11127e-010 0.1 0.235081
+      rotation 0 1 0 3.14159
+      children [
+        Solid {
+          children [
+            DEF push Shape {
+              geometry Box {
+                size 0.3 0.14 0.03
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.15 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.15 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+      ]
+      name "push_servo"
+      boundingObject Group {
+        children [
+          USE push
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.0001
+      }
+      type "linear"
+      maxForce 1000
+      position -2.32407e-005
+    }
+    Servo {
+      rotation 0 1 0 3.38478e-010
+      children [
+        Solid {
+          translation 0.16 0.11 0.075
+          children [
+            DEF side2 Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.501961 0 1
+                }
+              }
+              geometry Box {
+                size 0.02 0.19 0.35
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.16 0.11 0.075
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.501961 0 1
+                }
+              }
+              geometry Box {
+                size 0.02 0.19 0.35
+              }
+            }
+          ]
+        }
+      ]
+      name "carr_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0.16 0.11 0.075
+            children [
+              USE side2
+            ]
+          }
+          Transform {
+            translation -0.16 0.11 0.075
+            children [
+              USE side2
+            ]
+          }
+        ]
+      }
+      maxForce 10000
+      position 6.76956e-011
+    }
+    DEF rear_wheel Solid {
+      translation 0.17 0.02 0.23
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    DEF rear_wheel Solid {
+      translation -0.17 0.02 0.23
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    Solid {
+      translation -0.2 0.0825 0
+      rotation 1 0 0 5.68302
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "left wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    Solid {
+      translation 0.2 0.0825 0
+      rotation 1 0 0 0.337766
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.0037037 0.0037037 0.0037037
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "right wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    DistanceSensor {
+      translation -0.027 0.23 -0.164
+      rotation 0 1 0 1.8
+      name "ds3"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.077 0.23 -0.147
+      rotation 0 1 0 2.2
+      name "ds2"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.118 0.23 -0.116
+      rotation 0 1 0 2.6
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.4 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation -0.136 0.23 -0.071
+      rotation 0 1 0 3
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.2 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.136 0.23 -0.071
+      rotation 0 1 0 0.14
+      name "ds7"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.2 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.118 0.23 -0.116
+      rotation 0 1 0 0.54
+      name "ds6"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.4 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.077 0.23 -0.147
+      rotation 0 1 0 0.94
+      name "ds5"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+    }
+    DistanceSensor {
+      translation 0.027 0.23 -0.164
+      rotation 0 1 0 1.34
+      name "ds4"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+    }
+    DEF FRONT GPS {
+      translation 0 0 -0.1
+      name "front_gps"
+    }
+    DEF CENTER GPS {
+      name "center_gps"
+    }
+    Emitter {
+      channel -1
+    }
+    Receiver {
+      channel -1
+    }
+    DEF dist_sensor Servo {
+      translation 0 0.03 -0.07
+      rotation 0 1 0 -1.5708
+      children [
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 0.4
+          name "ob0"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.3
+          name "ob1"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.85
+          name "ob2"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.2
+          name "ob3"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.5
+          name "ob4"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.6 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.8
+          name "ob5"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.6 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.1
+          name "ob6"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.55
+          name "ob7"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3
+          name "ob8"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.5 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3.6
+          name "ob9"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+      ]
+      name "lift_servo"
+      maxForce 1000
+      acceleration 50
+      position -1.5708
+    }
+  ]
+  name "4"
+  description "designed by Activmedia Robotics"
+  boundingObject Group {
+    children [
+      Transform {
+        translation -0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.015 0.06
+        children [
+          USE pan
+        ]
+      }
+      Transform {
+        translation 0 0.24 -0.03
+        children [
+          Box {
+            size 0.42 0.07 0.2
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 10
+  }
+  controller "caripper"
+  axleLength 0.32
+  wheelRadius 0.0825
+  maxAcceleration -1
+  speedUnit 0.1
+  maxForce 2
+}
+DEF R5 DifferentialWheels {
+  translation 3.5 -0.00510266 -2.2
+  rotation 0 1 0 3.14159
+  children [
+    DEF hook Servo {
+      translation 0 0.15 -0.15
+      rotation 1 0 0 1.5708
+      children [
+        Solid {
+          translation 0 0 -0.07
+          children [
+            DEF joint1 Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.501961 0 1
+                }
+              }
+              geometry Box {
+                size 0.02 0.02 0.14
+              }
+            }
+            Solid {
+              translation 0 -0.02 -0.08
+              children [
+                DEF joint2 Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.501961 0 1
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.07
+                    radius 0.01
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      name "hook_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0 0 -0.07
+            children [
+              DEF joint1 Shape {
+                appearance Appearance {
+                  material Material {
+                    diffuseColor 0.501961 0 1
+                  }
+                }
+                geometry Box {
+                  size 0.02 0.02 0.14
+                }
+              }
+            ]
+          }
+          Transform {
+            translation 0 -0.02 -0.15
+            children [
+              DEF joint2 Shape {
+                appearance Appearance {
+                  material Material {
+                    diffuseColor 0.501961 0 1
+                  }
+                }
+                geometry Cylinder {
+                  height 0.07
+                  radius 0.01
+                }
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.1
+      }
+      position 1.58207e-012
+    }
+    DEF lift Servo {
+      translation 0 0.01 0.25
+      rotation 1 0 0 0
+      children [
+        Solid {
+          translation 0 0 0.19
+          children [
+            DEF pan Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 1 0
+                  emissiveColor 0 1 0
+                }
+              }
+              geometry Box {
+                size 0.38 1e-007 0.38
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.19 0.05 0.08
+          children [
+            DEF tp Shape {
+              geometry Box {
+                size 0.0001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.19 0.05 0.08
+          children [
+            DEF tp Shape {
+              geometry Box {
+                size 0.0001 0.1 0.1
+              }
+            }
+          ]
+        }
+        DistanceSensor {
+          translation 0.2 0.05 0.25
+          rotation 0 1 0 0.4
+          name "ob0"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.3
+          name "ob1"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.85
+          name "ob2"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.2
+          name "ob3"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.5
+          name "ob4"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.8
+          name "ob5"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.1
+          name "ob6"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.55
+          name "ob7"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3
+          name "ob8"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation -0.2 0.05 0.25
+          rotation 0 1 0 -3.6
+          name "ob9"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+      ]
+      name "lift_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0.19 0.05 0.05
+            children [
+              Box {
+                size 0.0001 0.1 0.1
+              }
+            ]
+          }
+          Transform {
+            translation -0.19 0.05 0.05
+            children [
+              Box {
+                size 0.0001 0.1 0.1
+              }
+            ]
+          }
+          Transform {
+            translation 0 0 0.19
+            children [
+              Box {
+                size 0.38 1e-008 0.38
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+      maxForce 1000
+      acceleration 50
+      position -1.5708
+    }
+    DEF push Servo {
+      translation 0 0.1 -0.0450381
+      rotation 0 0 1 0
+      children [
+        Solid {
+          children [
+            DEF push Shape {
+              geometry Box {
+                size 0.373 0.14 0.03
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.188 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.188 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+      ]
+      name "push_servo"
+      boundingObject DEF push Shape {
+        geometry Box {
+          size 0.373 0.14 0.03
+        }
+      }
+      physics Physics {
+        density -1
+        mass 0.0001
+      }
+      type "linear"
+      maxForce 1000
+      position -2.13592e-006
+    }
+    Servo {
+      rotation 0 1 0 1.01544e-009
+      children [
+        Solid {
+          translation 0 0.03 0.1
+          children [
+            DEF bott Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.41 0.001 0.3
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.2 0.15 0.05
+          children [
+            DEF side Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.02 0.25 0.3
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.2 0.15 0.05
+          children [
+            DEF side Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.02 0.25 0.3
+              }
+            }
+          ]
+        }
+      ]
+      name "carr_servo"
+      maxForce 10000
+      position 6.76956e-011
+    }
+    DEF rear_wheel Solid {
+      translation 0.2 0.02 0.1
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0.25098
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    DEF rear_wheel Solid {
+      translation -0.2 0.02 0.1
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0.25098
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    Solid {
+      translation -0.23 0.0825 0
+      rotation 1 0 0 5.68302
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "left wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    Solid {
+      translation 0.23 0.0825 0
+      rotation 1 0 0 0.337766
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.0037037 0.0037037 0.0037037
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "right wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    DistanceSensor {
+      translation -0.027 0.07 -0.164
+      rotation 0 1 0 1.7
+      name "ds3"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.7 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.2
+    }
+    DistanceSensor {
+      translation -0.077 0.07 -0.147
+      rotation 0 1 0 2
+      name "ds2"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation -0.118 0.07 -0.116
+      rotation 0 1 0 2.4
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation -0.136 0.07 -0.071
+      rotation 0 1 0 2.8
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.136 0.07 -0.071
+      rotation 0 1 0 0.4
+      name "ds7"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.118 0.07 -0.116
+      rotation 0 1 0 0.75
+      name "ds6"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.077 0.07 -0.147
+      rotation 0 1 0 1.1
+      name "ds5"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.027 0.07 -0.164
+      rotation 0 1 0 1.4
+      name "ds4"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.7 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.2
+    }
+    DEF FRONT GPS {
+      translation 0 0 -0.1
+      name "front_gps"
+    }
+    DEF CENTER GPS {
+      name "center_gps"
+    }
+    Emitter {
+      channel -1
+    }
+    Receiver {
+      channel -1
+    }
+  ]
+  name "5"
+  description "designed by Activmedia Robotics"
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.03 0.1
+        children [
+          Shape {
+            geometry Box {
+              size 0.41 0.001 0.3
+            }
+          }
+        ]
+      }
+      Transform {
+        translation -0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.18 -0.12
+        children [
+          Box {
+            size 0.5 0.3 0.15
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 10
+  }
+  controller "carrier"
+  axleLength 0.32
+  wheelRadius 0.0825
+  maxAcceleration -1
+  speedUnit 0.1
+  maxForce 100
+}
+DEF R6 DifferentialWheels {
+  translation 9.4 -0.00510266 4.8
+  rotation 0 1 0 1.57079
+  children [
+    DEF hook Servo {
+      translation 0 0.15 -0.15
+      rotation 1 0 0 1.5708
+      children [
+        Solid {
+          translation 0 0 -0.07
+          children [
+            DEF joint1 Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.501961 0 1
+                }
+              }
+              geometry Box {
+                size 0.02 0.02 0.14
+              }
+            }
+            Solid {
+              translation 0 -0.02 -0.08
+              children [
+                DEF joint2 Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.501961 0 1
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.07
+                    radius 0.01
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      name "hook_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0 0 -0.07
+            children [
+              DEF joint1 Shape {
+                appearance Appearance {
+                  material Material {
+                    diffuseColor 0.501961 0 1
+                  }
+                }
+                geometry Box {
+                  size 0.02 0.02 0.14
+                }
+              }
+            ]
+          }
+          Transform {
+            translation 0 -0.02 -0.15
+            children [
+              DEF joint2 Shape {
+                appearance Appearance {
+                  material Material {
+                    diffuseColor 0.501961 0 1
+                  }
+                }
+                geometry Cylinder {
+                  height 0.07
+                  radius 0.01
+                }
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.1
+      }
+      position 1.58207e-012
+    }
+    DEF lift Servo {
+      translation 0 0.01 0.25
+      rotation 1 0 0 0
+      children [
+        Solid {
+          translation 0 0 0.19
+          children [
+            DEF pan Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 1 0
+                  emissiveColor 0 1 0
+                }
+              }
+              geometry Box {
+                size 0.38 1e-007 0.38
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.19 0.05 0.08
+          children [
+            DEF tp Shape {
+              geometry Box {
+                size 0.0001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.19 0.05 0.08
+          children [
+            DEF tp Shape {
+              geometry Box {
+                size 0.0001 0.1 0.1
+              }
+            }
+          ]
+        }
+        DistanceSensor {
+          translation 0.2 0.05 0.25
+          rotation 0 1 0 0.4
+          name "ob0"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.3
+          name "ob1"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.85
+          name "ob2"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.2
+          name "ob3"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.5
+          name "ob4"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.8
+          name "ob5"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.1
+          name "ob6"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.55
+          name "ob7"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3
+          name "ob8"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation -0.2 0.05 0.25
+          rotation 0 1 0 -3.6
+          name "ob9"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+      ]
+      name "lift_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0.19 0.05 0.05
+            children [
+              Box {
+                size 0.0001 0.1 0.1
+              }
+            ]
+          }
+          Transform {
+            translation -0.19 0.05 0.05
+            children [
+              Box {
+                size 0.0001 0.1 0.1
+              }
+            ]
+          }
+          Transform {
+            translation 0 0 0.19
+            children [
+              Box {
+                size 0.38 1e-008 0.38
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+      maxForce 1000
+      acceleration 50
+      position -1.5708
+    }
+    DEF push Servo {
+      translation 0 0.1 -0.0450424
+      rotation 0 0 1 0
+      children [
+        Solid {
+          children [
+            DEF push Shape {
+              geometry Box {
+                size 0.373 0.14 0.03
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.188 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.188 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+      ]
+      name "push_servo"
+      boundingObject DEF push Shape {
+        geometry Box {
+          size 0.373 0.14 0.03
+        }
+      }
+      physics Physics {
+        density -1
+        mass 0.0001
+      }
+      type "linear"
+      maxForce 1000
+      position -2.13592e-006
+    }
+    Servo {
+      rotation 0 1 0 1.15083e-009
+      children [
+        Solid {
+          translation 0 0.03 0.1
+          children [
+            DEF bott Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.41 0.001 0.3
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.2 0.15 0.05
+          children [
+            DEF side Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.02 0.25 0.3
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.2 0.15 0.05
+          children [
+            DEF side Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.02 0.25 0.3
+              }
+            }
+          ]
+        }
+      ]
+      name "carr_servo"
+      maxForce 10000
+      position 6.76956e-011
+    }
+    DEF rear_wheel Solid {
+      translation 0.2 0.02 0.1
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0.25098
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    DEF rear_wheel Solid {
+      translation -0.2 0.02 0.1
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0.25098
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    Solid {
+      translation -0.23 0.0825 0
+      rotation 1 0 0 5.68302
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "left wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    Solid {
+      translation 0.23 0.0825 0
+      rotation 1 0 0 0.337766
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.0037037 0.0037037 0.0037037
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "right wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    DistanceSensor {
+      translation -0.027 0.07 -0.164
+      rotation 0 1 0 1.7
+      name "ds3"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.7 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.2
+    }
+    DistanceSensor {
+      translation -0.077 0.07 -0.147
+      rotation 0 1 0 2
+      name "ds2"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation -0.118 0.07 -0.116
+      rotation 0 1 0 2.4
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation -0.136 0.07 -0.071
+      rotation 0 1 0 2.8
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.136 0.07 -0.071
+      rotation 0 1 0 0.4
+      name "ds7"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.118 0.07 -0.116
+      rotation 0 1 0 0.75
+      name "ds6"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.077 0.07 -0.147
+      rotation 0 1 0 1.1
+      name "ds5"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.027 0.07 -0.164
+      rotation 0 1 0 1.4
+      name "ds4"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.7 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.2
+    }
+    DEF FRONT GPS {
+      translation 0 0 -0.1
+      name "front_gps"
+    }
+    DEF CENTER GPS {
+      name "center_gps"
+    }
+    Emitter {
+      channel -1
+    }
+    Receiver {
+      channel -1
+    }
+  ]
+  name "6"
+  description "designed by Activmedia Robotics"
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.03 0.1
+        children [
+          Shape {
+            geometry Box {
+              size 0.41 0.001 0.3
+            }
+          }
+        ]
+      }
+      Transform {
+        translation -0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.18 -0.12
+        children [
+          Box {
+            size 0.5 0.3 0.15
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 10
+  }
+  controller "carrier"
+  axleLength 0.32
+  wheelRadius 0.0825
+  maxAcceleration -1
+  speedUnit 0.1
+  maxForce 100
+}
+DEF R7 DifferentialWheels {
+  translation 8.7 -0.00510266 3.4
+  rotation 0 1 0 7.85399
+  children [
+    DEF hook Servo {
+      translation 0 0.15 -0.15
+      rotation 1 0 0 1.5708
+      children [
+        Solid {
+          translation 0 0 -0.07
+          children [
+            DEF joint1 Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.501961 0 1
+                }
+              }
+              geometry Box {
+                size 0.02 0.02 0.14
+              }
+            }
+            Solid {
+              translation 0 -0.02 -0.08
+              children [
+                DEF joint2 Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.501961 0 1
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.07
+                    radius 0.01
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      name "hook_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0 0 -0.07
+            children [
+              DEF joint1 Shape {
+                appearance Appearance {
+                  material Material {
+                    diffuseColor 0.501961 0 1
+                  }
+                }
+                geometry Box {
+                  size 0.02 0.02 0.14
+                }
+              }
+            ]
+          }
+          Transform {
+            translation 0 -0.02 -0.15
+            children [
+              DEF joint2 Shape {
+                appearance Appearance {
+                  material Material {
+                    diffuseColor 0.501961 0 1
+                  }
+                }
+                geometry Cylinder {
+                  height 0.07
+                  radius 0.01
+                }
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.1
+      }
+      position 1.58207e-012
+    }
+    DEF lift Servo {
+      translation 0 0.01 0.25
+      rotation 1 0 0 0
+      children [
+        Solid {
+          translation 0 0 0.19
+          children [
+            DEF pan Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 1 0
+                  emissiveColor 1 1 0
+                }
+              }
+              geometry Box {
+                size 0.38 1e-007 0.38
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.19 0.05 0.08
+          children [
+            DEF tp Shape {
+              geometry Box {
+                size 0.0001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.19 0.05 0.08
+          children [
+            DEF tp Shape {
+              geometry Box {
+                size 0.0001 0.1 0.1
+              }
+            }
+          ]
+        }
+        DistanceSensor {
+          translation 0.2 0.05 0.25
+          rotation 0 1 0 0.4
+          name "ob0"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.3
+          name "ob1"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.85
+          name "ob2"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.2
+          name "ob3"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.5
+          name "ob4"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.8
+          name "ob5"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.1
+          name "ob6"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.55
+          name "ob7"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3
+          name "ob8"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation -0.2 0.05 0.25
+          rotation 0 1 0 -3.6
+          name "ob9"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+      ]
+      name "lift_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0.19 0.05 0.05
+            children [
+              Box {
+                size 0.0001 0.1 0.1
+              }
+            ]
+          }
+          Transform {
+            translation -0.19 0.05 0.05
+            children [
+              Box {
+                size 0.0001 0.1 0.1
+              }
+            ]
+          }
+          Transform {
+            translation 0 0 0.19
+            children [
+              Box {
+                size 0.38 1e-008 0.38
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+      maxForce 1000
+      acceleration 50
+      position -1.5708
+    }
+    DEF push Servo {
+      translation 0 0.1 -0.0450381
+      rotation 0 0 1 0
+      children [
+        Solid {
+          children [
+            DEF push Shape {
+              geometry Box {
+                size 0.373 0.14 0.03
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.188 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.188 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+      ]
+      name "push_servo"
+      boundingObject DEF push Shape {
+        geometry Box {
+          size 0.373 0.14 0.03
+        }
+      }
+      physics Physics {
+        density -1
+        mass 0.0001
+      }
+      type "linear"
+      maxForce 1000
+      position -2.13592e-006
+    }
+    Servo {
+      rotation 0 1 0 1.08313e-009
+      children [
+        Solid {
+          translation 0 0.03 0.1
+          children [
+            DEF bott Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.41 0.001 0.3
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.2 0.15 0.05
+          children [
+            DEF side Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.02 0.25 0.3
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.2 0.15 0.05
+          children [
+            DEF side Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.02 0.25 0.3
+              }
+            }
+          ]
+        }
+      ]
+      name "carr_servo"
+      maxForce 10000
+      position 6.76956e-011
+    }
+    DEF rear_wheel Solid {
+      translation 0.2 0.02 0.1
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0.25098
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    DEF rear_wheel Solid {
+      translation -0.2 0.02 0.1
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0.25098
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    Solid {
+      translation -0.23 0.0825 0
+      rotation 1 0 0 5.68302
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "left wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    Solid {
+      translation 0.23 0.0825 0
+      rotation 1 0 0 0.337766
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.0037037 0.0037037 0.0037037
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "right wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    DistanceSensor {
+      translation -0.027 0.07 -0.164
+      rotation 0 1 0 1.7
+      name "ds3"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.7 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.2
+    }
+    DistanceSensor {
+      translation -0.077 0.07 -0.147
+      rotation 0 1 0 2
+      name "ds2"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation -0.118 0.07 -0.116
+      rotation 0 1 0 2.4
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation -0.136 0.07 -0.071
+      rotation 0 1 0 2.8
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.136 0.07 -0.071
+      rotation 0 1 0 0.4
+      name "ds7"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.118 0.07 -0.116
+      rotation 0 1 0 0.75
+      name "ds6"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.077 0.07 -0.147
+      rotation 0 1 0 1.1
+      name "ds5"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.027 0.07 -0.164
+      rotation 0 1 0 1.4
+      name "ds4"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.7 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.2
+    }
+    DEF FRONT GPS {
+      translation 0 0 -0.1
+      name "front_gps"
+    }
+    DEF CENTER GPS {
+      name "center_gps"
+    }
+    Emitter {
+      channel -1
+    }
+    Receiver {
+      channel -1
+    }
+  ]
+  name "7"
+  description "designed by Activmedia Robotics"
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.03 0.1
+        children [
+          Shape {
+            geometry Box {
+              size 0.41 0.001 0.3
+            }
+          }
+        ]
+      }
+      Transform {
+        translation -0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.18 -0.12
+        children [
+          Box {
+            size 0.5 0.3 0.15
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 10
+  }
+  controller "carrier"
+  axleLength 0.32
+  wheelRadius 0.0825
+  maxAcceleration -1
+  speedUnit 0.1
+  maxForce 100
+}
+DEF R8 DifferentialWheels {
+  translation -4.9 -0.00510266 -1.5
+  rotation 0 1 0 3.14159
+  children [
+    DEF hook Servo {
+      translation 0 0.15 -0.15
+      rotation 1 0 0 1.5708
+      children [
+        Solid {
+          translation 0 0 -0.07
+          children [
+            DEF joint1 Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.501961 0 1
+                }
+              }
+              geometry Box {
+                size 0.02 0.02 0.14
+              }
+            }
+            Solid {
+              translation 0 -0.02 -0.08
+              children [
+                DEF joint2 Shape {
+                  appearance Appearance {
+                    material Material {
+                      diffuseColor 0.501961 0 1
+                    }
+                  }
+                  geometry Cylinder {
+                    height 0.07
+                    radius 0.01
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+      name "hook_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0 0 -0.07
+            children [
+              DEF joint1 Shape {
+                appearance Appearance {
+                  material Material {
+                    diffuseColor 0.501961 0 1
+                  }
+                }
+                geometry Box {
+                  size 0.02 0.02 0.14
+                }
+              }
+            ]
+          }
+          Transform {
+            translation 0 -0.02 -0.15
+            children [
+              DEF joint2 Shape {
+                appearance Appearance {
+                  material Material {
+                    diffuseColor 0.501961 0 1
+                  }
+                }
+                geometry Cylinder {
+                  height 0.07
+                  radius 0.01
+                }
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.1
+      }
+      position 1.58207e-012
+    }
+    DEF lift Servo {
+      translation 0 0.01 0.25
+      rotation 1 0 0 0
+      children [
+        Solid {
+          translation 0 0 0.19
+          children [
+            DEF pan Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 1 0
+                  emissiveColor 1 1 0
+                }
+              }
+              geometry Box {
+                size 0.38 1e-007 0.38
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.19 0.05 0.08
+          children [
+            DEF tp Shape {
+              geometry Box {
+                size 0.0001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.19 0.05 0.08
+          children [
+            DEF tp Shape {
+              geometry Box {
+                size 0.0001 0.1 0.1
+              }
+            }
+          ]
+        }
+        DistanceSensor {
+          translation 0.2 0.05 0.25
+          rotation 0 1 0 0.4
+          name "ob0"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.3
+          name "ob1"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -0.85
+          name "ob2"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.2
+          name "ob3"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.5
+          name "ob4"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -1.8
+          name "ob5"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.1
+          name "ob6"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -2.55
+          name "ob7"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.15
+        }
+        DistanceSensor {
+          translation 0 0.05 0.25
+          rotation 0 1 0 -3
+          name "ob8"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.7 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.3
+        }
+        DistanceSensor {
+          translation -0.2 0.05 0.25
+          rotation 0 1 0 -3.6
+          name "ob9"
+          lookupTable [
+            0 1024 0
+            0.1 1024 0
+            0.4 0 0
+          ]
+          type "sonar"
+          numberOfRays 2
+          aperture 0.4
+        }
+      ]
+      name "lift_servo"
+      boundingObject Group {
+        children [
+          Transform {
+            translation 0.19 0.05 0.05
+            children [
+              Box {
+                size 0.0001 0.1 0.1
+              }
+            ]
+          }
+          Transform {
+            translation -0.19 0.05 0.05
+            children [
+              Box {
+                size 0.0001 0.1 0.1
+              }
+            ]
+          }
+          Transform {
+            translation 0 0 0.19
+            children [
+              Box {
+                size 0.38 1e-008 0.38
+              }
+            ]
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 1
+      }
+      maxForce 1000
+      acceleration 50
+      position -1.5708
+    }
+    DEF push Servo {
+      translation 0 0.1 -0.0450424
+      rotation 0 0 1 0
+      children [
+        Solid {
+          children [
+            DEF push Shape {
+              geometry Box {
+                size 0.373 0.14 0.03
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.188 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.188 0 0.06
+          children [
+            DEF sid Shape {
+              geometry Box {
+                size 0.001 0.1 0.1
+              }
+            }
+          ]
+        }
+      ]
+      name "push_servo"
+      boundingObject DEF push Shape {
+        geometry Box {
+          size 0.373 0.14 0.03
+        }
+      }
+      physics Physics {
+        density -1
+        mass 0.0001
+      }
+      type "linear"
+      maxForce 1000
+      position -2.13592e-006
+    }
+    Servo {
+      rotation 0 1 0 1.21852e-009
+      children [
+        Solid {
+          translation 0 0.03 0.1
+          children [
+            DEF bott Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.41 0.001 0.3
+              }
+            }
+          ]
+        }
+        Solid {
+          translation -0.2 0.15 0.05
+          children [
+            DEF side Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.02 0.25 0.3
+              }
+            }
+          ]
+        }
+        Solid {
+          translation 0.2 0.15 0.05
+          children [
+            DEF side Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0
+                }
+              }
+              geometry Box {
+                size 0.02 0.25 0.3
+              }
+            }
+          ]
+        }
+      ]
+      name "carr_servo"
+      maxForce 10000
+      position 6.76956e-011
+    }
+    DEF rear_wheel Solid {
+      translation 0.2 0.02 0.1
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0.25098
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    DEF rear_wheel Solid {
+      translation -0.2 0.02 0.1
+      rotation 1 0 0 1.5708
+      children [
+        DEF REAR Transform {
+          rotation 0 0 1 1.5708
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0.501961 0.25098
+                }
+              }
+              geometry Cylinder {
+                height 0.02
+                radius 0.01
+              }
+            }
+          ]
+        }
+      ]
+      boundingObject DEF REAR Transform {
+        rotation 0 0 1 1.5708
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0.501961 0.25098
+              }
+            }
+            geometry Cylinder {
+              height 0.02
+              radius 0.01
+            }
+          }
+        ]
+      }
+      physics Physics {
+        density -1
+        mass 0.5
+      }
+    }
+    Solid {
+      translation -0.23 0.0825 0
+      rotation 1 0 0 5.68302
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  ambientIntensity 0.4
+                  diffuseColor 0 0 0
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "left wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    Solid {
+      translation 0.23 0.0825 0
+      rotation 1 0 0 0.337766
+      children [
+        DEF WHEEL Transform {
+          rotation 0 0 1 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.0037037 0.0037037 0.0037037
+                }
+              }
+              geometry Cylinder {
+                height 0.037
+                radius 0.0825
+              }
+            }
+          ]
+        }
+      ]
+      name "right wheel"
+      boundingObject DEF WHEEL Transform {
+        rotation 0 0 1 1.57
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.0037037 0.0037037 0.0037037
+              }
+            }
+            geometry Cylinder {
+              height 0.037
+              radius 0.0825
+            }
+          }
+        ]
+      }
+      physics Physics {
+        mass 1
+      }
+      locked TRUE
+    }
+    DistanceSensor {
+      translation -0.027 0.07 -0.164
+      rotation 0 1 0 1.7
+      name "ds3"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.7 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.2
+    }
+    DistanceSensor {
+      translation -0.077 0.07 -0.147
+      rotation 0 1 0 2
+      name "ds2"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation -0.118 0.07 -0.116
+      rotation 0 1 0 2.4
+      name "ds1"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation -0.136 0.07 -0.071
+      rotation 0 1 0 2.8
+      name "ds0"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.136 0.07 -0.071
+      rotation 0 1 0 0.4
+      name "ds7"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.5 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.118 0.07 -0.116
+      rotation 0 1 0 0.75
+      name "ds6"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.077 0.07 -0.147
+      rotation 0 1 0 1.1
+      name "ds5"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.6 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.3
+    }
+    DistanceSensor {
+      translation 0.027 0.07 -0.164
+      rotation 0 1 0 1.4
+      name "ds4"
+      lookupTable [
+        0 1024 0
+        0.2 1024 0.1
+        0.7 0 0.1
+      ]
+      type "sonar"
+      numberOfRays 2
+      aperture 0.2
+    }
+    DEF FRONT GPS {
+      translation 0 0 -0.1
+      name "front_gps"
+    }
+    DEF CENTER GPS {
+      name "center_gps"
+    }
+    Emitter {
+      channel -1
+    }
+    Receiver {
+      channel -1
+    }
+  ]
+  name "8"
+  description "designed by Activmedia Robotics"
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.03 0.1
+        children [
+          Shape {
+            geometry Box {
+              size 0.41 0.001 0.3
+            }
+          }
+        ]
+      }
+      Transform {
+        translation -0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0.2 0.15 0.05
+        children [
+          Box {
+            size 0.02 0.25 0.3
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.18 -0.12
+        children [
+          Box {
+            size 0.5 0.3 0.15
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 10
+  }
+  controller "carrier"
+  axleLength 0.32
+  wheelRadius 0.0825
+  maxAcceleration -1
+  speedUnit 0.1
+  maxForce 100
+}
+DEF T1 Solid {
+  translation -5.08793e-022 -0.00721343 7
+  rotation 1 -4.86438e-020 -5.4526e-017 0.0071249
+  children [
+    Solid {
+      translation 0.7 0.07 -1
+      rotation -0.479646 0.874798 0.0683256 3.42351e-006
+      children [
+        DEF pus1 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Box {
+            size 0.4 0.14 0.01
+          }
+        }
+      ]
+    }
+    Solid {
+      translation -0.7 0.07 -1
+      rotation -0.479646 0.874798 0.0683256 3.42351e-006
+      children [
+        DEF pus1 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Box {
+            size 0.4 0.14 0.01
+          }
+        }
+      ]
+    }
+    Solid {
+      translation 0 0.01 0
+      children [
+        DEF tr1 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0 0 1
+            }
+          }
+          geometry Box {
+            size 1.8 0.02 2
+          }
+        }
+      ]
+    }
+    Solid {
+      children [
+        DEF tr1 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 1 0
+            }
+          }
+          geometry Box {
+            size 1.8 0.02 2
+          }
+        }
+      ]
+    }
+  ]
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.01 0
+        children [
+          DEF tr1 Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0 0 1
+              }
+            }
+            geometry Box {
+              size 1.8 0.003 2
+            }
+          }
+        ]
+      }
+      Transform {
+        translation 0.7 0.07 -1
+        children [
+          USE pus1
+        ]
+      }
+      Transform {
+        translation -0.7 0.07 -1
+        children [
+          USE pus1
+        ]
+      }
+      Transform {
+        translation 0.7 0.07 -0.85
+        children [
+          USE pus1
+        ]
+      }
+      Transform {
+        translation -0.7 0.07 -0.85
+        children [
+          USE pus1
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 8
+    bounce 0
+  }
+}
+DEF T2 Solid {
+  translation 0.8 -0.00209275 19
+  rotation -0.00130786 0.999999 4.75028e-007 -3.14087
+  children [
+    DEF upper Solid {
+      translation -0.4 0.07 0
+      rotation 0 1 0 1.5708
+      children [
+        DEF pus1 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Box {
+            size 0.82 0.14 0.01
+          }
+        }
+      ]
+    }
+    DEF right Solid {
+      translation 0 0.06 -0.4
+      children [
+        DEF pus3 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Box {
+            size 0.8 0.1 0.02
+          }
+        }
+      ]
+    }
+    Solid {
+      translation 0 0.01 0
+      children [
+        DEF tr1 Shape {
+          appearance Appearance {
+            material Material {
+            }
+          }
+          geometry Box {
+            size 0.8 0.02 0.8
+          }
+        }
+      ]
+    }
+  ]
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.005 0
+        children [
+          Box {
+            size 0.8 0.01 0.8
+          }
+        ]
+      }
+      Transform {
+        translation -0.4 0.07 -0.1
+        rotation 0 1 0 1.5708
+        children [
+          DEF pus1 Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.501961 0.501961 0.501961
+              }
+            }
+            geometry Box {
+              size 0.61 0.14 0.01
+            }
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.06 -0.4
+        children [
+          DEF pus3 Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.501961 0.501961 0.501961
+              }
+            }
+            geometry Box {
+              size 0.8 0.1 0.02
+            }
+          }
+        ]
+      }
+      Transform {
+        translation -0.25 0.09 -0.1
+        rotation 0 1 0 1.5708
+        children [
+          Box {
+            size 0.6 0.13 0.01
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 8
+    bounce 0
+  }
+}
+DEF T3 Solid {
+  translation 3.96701e-007 -0.00209275 19.82
+  rotation -0.00130787 0.999998 -0.00129292 1.58229
+  children [
+    DEF upper Solid {
+      translation -0.4 0.07 0
+      rotation 0 1 0 1.5708
+      children [
+        DEF pus1 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Box {
+            size 0.82 0.14 0.01
+          }
+        }
+      ]
+    }
+    DEF left Solid {
+      translation 0 0.06 0.4
+      children [
+        DEF pus3 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Box {
+            size 0.8 0.1 0.02
+          }
+        }
+      ]
+    }
+    DEF right Solid {
+      translation 0 0.06 -0.4
+      children [
+        DEF pus3 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Box {
+            size 0.8 0.1 0.02
+          }
+        }
+      ]
+    }
+    Solid {
+      translation 0 0.01 0
+      children [
+        DEF tr1 Shape {
+          appearance Appearance {
+            material Material {
+            }
+          }
+          geometry Box {
+            size 0.8 0.02 0.8
+          }
+        }
+      ]
+    }
+  ]
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.005 0
+        children [
+          Box {
+            size 0.8 0.01 0.8
+          }
+        ]
+      }
+      Transform {
+        translation -0.4 0.07 0
+        rotation 0 1 0 1.5708
+        children [
+          DEF pus1 Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.501961 0.501961 0.501961
+              }
+            }
+            geometry Box {
+              size 0.59 0.14 0.01
+            }
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.06 -0.4
+        children [
+          DEF pus3 Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.501961 0.501961 0.501961
+              }
+            }
+            geometry Box {
+              size 0.8 0.1 0.02
+            }
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.06 0.4
+        children [
+          DEF pus3 Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.501961 0.501961 0.501961
+              }
+            }
+            geometry Box {
+              size 0.8 0.1 0.02
+            }
+          }
+        ]
+      }
+      Transform {
+        translation -0.25 0.07 0
+        rotation 0 1 0 1.5708
+        children [
+          DEF pus1 Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.501961 0.501961 0.501961
+              }
+            }
+            geometry Box {
+              size 0.73 0.14 0.01
+            }
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 8
+    bounce 0
+  }
+}
+DEF T4 Solid {
+  translation -0.8 -0.00209275 19
+  rotation -0.000329567 0.250596 -0.968092 0.00270194
+  children [
+    DEF upper Solid {
+      translation -0.4 0.07 0
+      rotation 0 1 0 1.5708
+      children [
+        DEF pus1 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Box {
+            size 0.82 0.14 0.01
+          }
+        }
+      ]
+    }
+    DEF right Solid {
+      translation 0 0.06 0.4
+      children [
+        DEF pus3 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.501961 0.501961 0.501961
+            }
+          }
+          geometry Box {
+            size 0.8 0.1 0.02
+          }
+        }
+      ]
+    }
+    Solid {
+      translation 0 0.01 0
+      children [
+        DEF tr1 Shape {
+          appearance Appearance {
+            material Material {
+            }
+          }
+          geometry Box {
+            size 0.8 0.02 0.8
+          }
+        }
+      ]
+    }
+  ]
+  boundingObject Group {
+    children [
+      Transform {
+        translation 0 0.005 0
+        children [
+          Box {
+            size 0.8 0.01 0.8
+          }
+        ]
+      }
+      Transform {
+        translation -0.4 0.07 0.1
+        rotation 0 1 0 1.5708
+        children [
+          DEF pus1 Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.501961 0.501961 0.501961
+              }
+            }
+            geometry Box {
+              size 0.6 0.14 0.01
+            }
+          }
+        ]
+      }
+      Transform {
+        translation 0 0.06 0.4
+        children [
+          DEF pus3 Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 0.501961 0.501961 0.501961
+              }
+            }
+            geometry Box {
+              size 0.8 0.1 0.02
+            }
+          }
+        ]
+      }
+      Transform {
+        translation -0.25 0.09 0.1
+        rotation 0 1 0 1.5708
+        children [
+          Box {
+            size 0.6 0.13 0.01
+          }
+        ]
+      }
+    ]
+  }
+  physics Physics {
+    density -1
+    mass 8
+    bounce 0
+  }
+}
+DEF Gate Solid {
+  translation 0 0.2 13.6
+}
+DEF Gate_bottom Solid {
+  translation 0 -0.3 13.6
+  boundingObject Shape {
+    geometry Box {
+      size 2 0.01 2.04
+    }
+  }
+}
+DEF g_floor Solid {
+  translation 0 0 14.55
+  boundingObject Transform {
+    translation 0 0 1.45
+    children [
+      Box {
+        size 2 0.005 1
+      }
+    ]
+  }
+}
+DEF Belt Solid {
+  translation 0 0.005 17.3
+  children [
+    DEF blt Shape {
+      geometry Box {
+        size 0.3 1e-008 1.6
+      }
+    }
+  ]
+  boundingObject Transform {
+    translation 0 -0.004 0
+    children [
+      USE blt
+    ]
+  }
+}
+DEF room1_floor Solid {
+  translation 5.8 0.01 17.7
+  children [
+    DEF room_fr Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+      }
+      geometry Box {
+        size 2.1 0.005 1
+      }
+    }
+  ]
+  boundingObject Transform {
+    translation 0 -0.01 0
+    children [
+      USE room_fr
+    ]
+  }
+}
+DEF room2_floor Solid {
+  translation 1.4 0.01 24.7
+  rotation 0 1 0 1.5708
+  children [
+    DEF room_fr Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+      }
+      geometry Box {
+        size 2.1 0.005 1.2
+      }
+    }
+  ]
+  boundingObject Transform {
+    translation 0 -0.01 0
+    children [
+      USE room_fr
+    ]
+  }
+}
+DEF room3_floor Solid {
+  translation -5.8 0.01 17.64
+  children [
+    DEF room_fr Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+      }
+      geometry Box {
+        size 2.1 0.005 1.1
+      }
+    }
+  ]
+  boundingObject Transform {
+    translation 0 -0.01 0
+    children [
+      USE room_fr
+    ]
+  }
+}
+DEF G1 Solid {
+  translation 3 -4999.96 1
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G2 Solid {
+  translation -4.4 -4999.96 7.2
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G3 Solid {
+  translation 6.67 -4999.96 4.14
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G4 Solid {
+  translation -3 -4999.96 1.3
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G5 Solid {
+  translation 4.8 -4999.96 7.8
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G6 Solid {
+  translation 0.8 -4999.96 3.19999
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G7 Solid {
+  translation -4.8 -4999.96 4.09999
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G8 Solid {
+  translation -5.43864 -4999.96 8.19086
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G9 Solid {
+  translation 4.3 -4999.96 5.6
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G10 Solid {
+  translation -1.08996 -4999.96 0.624936
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G11 Solid {
+  translation 3.3 -4999.96 1.2
+  rotation -5.87747e-016 5.32111e-016 1 -1.56991
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G12 Solid {
+  translation -5.43471 -4999.96 10.669
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G13 Solid {
+  translation 6.01131 -4999.96 10.2784
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G14 Solid {
+  translation -6.51323 -4999.96 4.82198
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G15 Solid {
+  translation -3.73538 -4999.96 0.555837
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G16 Solid {
+  translation 3.6 -4999.96 7.36312
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G17 Solid {
+  translation 5.5 -4999.96 5.7
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G18 Solid {
+  translation 5.91728 -4999.96 2.86753
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G19 Solid {
+  translation 2 -4999.96 3
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G20 Solid {
+  translation -3.74254 -4999.96 8.58843
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G21 Solid {
+  translation 0.657488 -4999.96 2.00116
+  rotation 1.12694e-016 -7.98955e-017 -1 1.56991
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G22 Solid {
+  translation 6.2 -4999.96 8.7
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G23 Solid {
+  translation -4.3 -4999.96 4.9
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G24 Solid {
+  translation 4 -4999.96 4.7
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G25 Solid {
+  translation -3.1942 -4999.96 6.65883
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G26 Solid {
+  translation 3.09881 -4999.96 0.471677
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G27 Solid {
+  translation 6.8 -4999.96 8.92688
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G28 Solid {
+  translation -1.48989 -4999.96 2.5
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G29 Solid {
+  translation -6.33729 -4999.96 6.73326
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G30 Solid {
+  translation -6.97387 -4999.96 9.20501
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G31 Solid {
+  translation 5 -4999.96 10.4
+  rotation 4.34864e-013 1 8.12792e-013 8.19906e-005
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G32 Solid {
+  translation 6.25936 -4999.96 6.15544
+  rotation -2.02404e-009 -1 -1.89342e-010 5.96046e-008
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G33 Solid {
+  translation 7 -4999.96 7.1213
+  rotation -2.34117e-009 -1 -6.1519e-010 5.96046e-008
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G34 Solid {
+  translation 1.16533 -4999.96 0.42
+  rotation -4.55443e-008 1 -6.73131e-005 1.1151e-007
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G35 Solid {
+  translation 1.06533 -4999.96 0.42
+  rotation 1.28571e-007 1 6.14176e-005 1.15424e-007
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G36 Solid {
+  translation 0.965114 -4999.96 -0.1
+  rotation -5.40457e-008 0.000121247 -1 0.000886212
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G37 Solid {
+  translation -4 -4999.96 9
+  rotation 1.37843e-009 -1 -6.95778e-008 2.98023e-008
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G38 Solid {
+  translation -6.3 -4999.96 10.3
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G39 Solid {
+  translation -4.1 -4999.96 9
+  rotation 3.65813e-010 -1 5.90966e-008 2.98023e-008
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G40 Solid {
+  translation 6.08963 -4999.96 4.73052
+  rotation 3.25281e-011 1 -1.77402e-011 -1.65745e-006
+  children [
+    DEF garbage Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE garbage
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G41 Solid {
+  translation 4 -4999.96 5
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G42 Solid {
+  translation 4.4 -4999.96 9.4
+  rotation -2.10109e-014 1 3.23252e-014 -0.00238631
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G43 Solid {
+  translation 1.7942 -4999.96 1.71759
+  rotation -3.08273e-012 1 3.46354e-008 -0.000152113
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G44 Solid {
+  translation 1.6942 -4999.96 1.71758
+  rotation 3.41295e-012 1 -3.46401e-008 -0.000152105
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G45 Solid {
+  translation -2 -4999.96 5.27556e-015
+  rotation 8.31878e-013 -1 -9.64093e-013 0.000151938
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G46 Solid {
+  translation -7 -4999.96 8
+  rotation 2.69454e-013 -1 -1.26642e-013 0.000151871
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G47 Solid {
+  translation -3.4 -4999.96 6.9
+  rotation 5.18116e-013 -1 -5.65719e-013 0.000151864
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G48 Solid {
+  translation -3.3 -4999.96 5.2
+  rotation -1.71993e-013 -1 -9.32397e-013 0.000151849
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G49 Solid {
+  translation 7 -4999.96 7
+  rotation 5.22842e-010 1 -3.73749e-011 -1.36571e-007
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G50 Solid {
+  translation 5.33799 -4999.96 9.89611
+  rotation -4.33595e-016 -4.17474e-016 1 1.5708
+  children [
+    DEF recycle Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G51 Solid {
+  translation 3 -4999.95 8
+  rotation -0.610043 -1.26215e-008 0.792369 -0
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G52 Solid {
+  translation -2.5 -4999.96 2.00116
+  rotation 6.30023e-012 -1 -1.88329e-011 6.61047e-007
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G53 Solid {
+  translation 0.173365 -4999.96 2.00116
+  rotation -1.62345e-010 -1 -2.96961e-011 6.61047e-007
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G54 Solid {
+  translation -1 -4999.96 1.18528e-017
+  rotation -4.70714e-011 -1 -8.18318e-011 6.6239e-007
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G55 Solid {
+  translation -6 -4999.96 9.28402
+  rotation -8.50354e-012 -1 2.60602e-011 6.61719e-007
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G56 Solid {
+  translation -6.3 -4999.96 6.2
+  rotation 3.39613e-011 1 9.44416e-012 -6.6239e-007
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G57 Solid {
+  translation -6 -4999.96 3.8
+  rotation 2.86252e-011 1 -4.96198e-011 -6.61719e-007
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G58 Solid {
+  translation 3 -4999.97 8
+  rotation -8.11922e-005 -1 9.49901e-005 6.65733e-007
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G59 Solid {
+  translation -1.00022 -4999.96 2.99999
+  rotation 0.0141421 0.0141546 -0.9998 -1.57011
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
+DEF G60 Solid {
+  translation -5.3 -4999.96 3.8
+  rotation 0.0299062 3.9081e-018 -0.999553 3.14159
+  children [
+    DEF stone Shape {
+      geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  boundingObject USE recycle
+  physics Physics {
+    density 1
+    mass 0.1
+  }
+}
